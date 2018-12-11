@@ -80,7 +80,7 @@ def remove_queues(period):
     now = datetime.datetime.now()
     duration = now- datetime.timedelta(days=period)
     
-    conn = mysql.connect(user='root', password='.....',host='.....',database='.....')
+    conn = mysql.connect(user='.....', password='.....',host='.....',database='.....')
     cursor = conn.cursor()
     sql= "delete from queues_queue_data where date(mk_time) < date('" + str(duration) + "')"
     #print(sql)
@@ -154,7 +154,7 @@ def saveToDB(logFile, mk_time):
     device_name = rest
     #print(device_name)
 
-    conn = mysql.connect(user='.....', password='.....',host='127.0.0.1',database='.....')
+    conn = mysql.connect(user='.....', password='.....',host='.....',database='.....')
     cursor = conn.cursor()
     for item in ds:
         sql = "select * from queues_queues where name='"+item[0] + "'"

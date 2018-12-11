@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+        {% load static %}
+        <script src="{% static "registrations.js" %}"> </script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+      text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+      }
+       .anchor:link    {
+            font-family: 'Montserrat', sans-serif;
+            color:orange;
+            font-size: 25px;
+             text-decoration: none;
+      }
+      table {
+            border-collapse: collapse;
+            font-size: 13px;
+
+      }
+      th, td {
+            padding: 0;
+            font-size: 13px;
+            font-family: 'Montserrat', sans-serif;
+      }
+
+       tr.head {
+            padding: 0;
+            font-size: 13px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            text-align: center;
+      }
+      h1 {
+            font-size: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+
+      h2 {
+            font-size: 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+
+      input {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      select {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+        circle {
+          fill:none;
+          stroke:blue;
+          stroke-width:2px;
+        }
+        path.blue {
+            fill: none;
+            stroke: #649cba;
+            stroke-width:2px;
+        }
+        path.red {
+            fill: none;
+            stroke: #40bb84;
+            stroke-width:2px;
+        }
+
+        .axis text {
+          font: 8pt sans-serif;
+          font-family: 'Poiret One', cursive;
+        }
+        .axis path, .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+        .y.axis path, .y.axis line {
+           stroke: #000;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>{{queue.name}}</title>
+
+</head>
+<body>
+<a href="/registrations/tower_list" class="anchor">HOME</a>
+<br>
+<br>
+
+<form method="GET" action="">
+    <input type="text" name='d_from' value="{{d_from }}" />
+    <input type="text" name='d_to' value="{{d_to}}" />
+    <input type="submit" value="GET Data" />
+
+</form>
+<br>
+{% if registrations %}
+<h1>Radio Name: {{reg_name}} </h1>
+<h1>Last IP: {{cust_ip}} </h1>
+<h1>MAC Address: {{cust_mac}} </h1>
+<br>
+
+<br>
+
+{% else %}
+    <h2>No Data available for {{ reg_name}} duration {{d_from}} to {{d_to}} </h2>
+
+{% endif %}
+
+
+    <script>
+        var data = {{filter_data|safe}};
+        //var usage = {{ usage|safe}};
+        var d_from = "{{d_from}}"
+        var d_to = "{{d_to}}"
+        //var time_delta = "{{time_delta|safe}}"
+        //console.log(time_delta)
+       // console.log(data);
+    </script>
+
+
+{% if registrations %}
+
+    <script>
+        console.log("help me");
+        var x = "dummy";
+        var y = "ccq_tx";
+        var y1 = "ccq_rx";
+       render(data, x, "rssi", "rssi", "RSSI" );
+       render(data, x, "ccq_tx", "ccq_tx", "CCQ_TX");
+       render(data, x, "ccq_rx", "ccq_rx", "CCQ_RX");
+       render(data, x, "uptime_sec", "uptime_sec", "UPTIME (hrs)");
+    </script>
+{% endif %}
+
+<br>
+
+<table border="1">
+        <tr class="head"><td>RSSI </td><td>SNR</td><td>CCQ_TX </td> <td>CCQ_RX</td><td>UPTIME</td><td>Extra</td><td>Log Time</td></tr>
+        {% for q in registrations %}
+    <tr><td> {{ q.rssi }} dBi</td><td> {{q.snr }} </td><td>{{q.ccq_tx}}</td><td>{{q.ccq_rx}}</td><td>{{q.uptime}}</td><td>{{q.extra}}</td><td>{{q.mk_time}}</td></tr>
+        {% endfor %}
+</table>
+<br>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

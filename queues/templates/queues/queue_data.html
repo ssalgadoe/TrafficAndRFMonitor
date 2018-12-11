@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="../queues.js"> </script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+      text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+      }
+      .anchor:link    {
+            font-family: 'Montserrat', sans-serif;
+            color:orange;
+            font-size: 20px;
+            text-decoration: none;
+      }
+      table {
+            border-collapse: collapse;
+            font-size: 20px;
+
+      }
+      th, td {
+            padding: 0;
+            font-size: 20px;
+            font-family: 'Montserrat', sans-serif;
+      }
+
+       tr.head {
+            padding: 0;
+            font-size: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            text-align: center;
+      }
+      h1 {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+
+      h2 {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+
+      input {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      select {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+        circle {
+          fill:none;
+          stroke:blue;
+          stroke-width:2px;
+        }
+        path.blue {
+            fill: none;
+            stroke: blue;
+            stroke-width:2px;
+        }
+        path.red {
+            fill: none;
+            stroke: red;
+            stroke-width:2px;
+        }
+
+        .axis text {
+          font: 8pt sans-serif;
+          font-family: 'Poiret One', cursive;
+        }
+        .axis path, .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+        .y.axis path, .y.axis line {
+           stroke: #000;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>{{queue.name}}</title>
+
+</head>
+<body>
+<br>
+<a href="/queues/mk_list" class="anchor">HOME</a>
+<br>
+<br>
+<form method="GET" action="">
+    <input type="text" name='d_from' value="{{d_from }}" />
+    <input type="text" name='d_to' value="{{d_to}}" />
+    <input type="submit" value="GET Data" />
+
+</form>
+
+{% if queue_data and is_data %}
+
+<br>
+<h2>Queue Name: {{queue.name}}</h2>
+<br>
+<h1 > Usage Summary:  &nbsp &nbsp <text>  (For period - {{d_from}} to {{d_to}}) </text> </h1>
+<br>
+
+<table border="1" >
+    <tr><td width="150">Total Download </td><td width="150">{{total_rx }} Gb</td></tr>
+    <td>Total Upload </td><td>{{total_tx }} Gb</td></tr>
+</table>
+{% else %}
+    <h2>No Data available for {{ queue.name}} for duration {{d_from}} to {{d_to}} </h2>
+
+{% endif %}
+
+
+    <script>
+        var data = {{filter_data|safe}};
+        var usage = {{ usage|safe}};
+        var d_from = "{{d_from}}"
+        var d_to = "{{d_to}}"
+        var time_delta = "{{time_delta|safe}}"
+        //console.log(queue_data)
+        //console.log(data, usage);
+    </script>
+{% if queue_data and is_data %}
+    <script>
+       render(data)
+    </script>
+{% endif %}
+
+<br>
+<table border="1">
+        <tr class="head"><td>Monthly Download </td><td>Monthly Upload</td><td>Download </td> <td>Average (RX)</td><td>Upload (Mb) </td><td> Average  (TX)</td><td>Log Time</td></tr>
+        {% for q in queue_data %}
+    <tr><td> {{ q.b_rx }} Gb</td><td> {{q.b_tx }} Gb</td><td>{{q.usage_rx}} Mb</td><td>{{q.average_rx}} kbps</td><td>{{q.usage_tx}} Mb</td><td>{{q.average_tx}} kbps</td><td>{{q.mk_time}}</td></tr>
+        {% endfor %}
+</table>
+</body>
+</html>

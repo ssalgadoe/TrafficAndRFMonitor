@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QUERIES</title>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+      text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+      }
+
+      select {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+      }
+      .anchor:link    {
+            font-family: 'Montserrat', sans-serif;
+            color:orange;
+            font-size: 25px;
+            text-decoration: none;
+
+      }
+      .anchor:visited {
+            font-family: 'Montserrat', sans-serif;
+            color:green;
+      }
+      .anchor:hover   {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+      .anchor:active  {
+            font-family: 'Montserrat', sans-serif;
+            color:red;
+      }
+
+
+      table {
+            border-collapse: collapse;
+            font-size: 20px;
+
+      }
+      th, td {
+            padding: 0;
+            font-size: 30px;
+            font-family: 'Montserrat', sans-serif;
+
+      }
+      tr.a {
+            padding: 0;
+            font-size: 20px;
+            font-size: 90%;
+            font-family: 'Montserrat', sans-serif;
+            color:green;
+      }
+      tr.b {
+            padding: 0;
+            font-size: 20px;
+            font-size: 40%;
+            font-family: 'Montserrat', sans-serif;
+            color:brown;
+      }
+       tr.head {
+            padding: 0;
+            font-size: 13px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            text-align: center;
+      }
+
+      ul.a {
+            list-style-type: circle;
+            color:green;
+      }
+
+      .anchor:link    {
+            font-family: 'Montserrat', sans-serif;
+            color:orange;
+            font-size: 35px;
+            text-decoration: none;
+      }
+      .anchor:visited {
+            font-family: 'Montserrat', sans-serif;
+            color:green;
+      }
+      .anchor:hover   {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+            .anchor:active  {
+            font-family: 'Montserrat', sans-serif;
+            color:red;
+      }
+       h2 {
+            font-size: 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+      input {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      select {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+
+      </style>
+</head>
+<body>
+<a href="/queues/" class="anchor">HOME</a>
+<br>
+<br>
+
+  <script>
+      //console.log('this is Queries');
+      var tower_list = {{towers|safe}};
+      var customers = {{customers|safe}};
+      var active_tower = {{active_tower}}
+      //console.log(tower_list)
+      //console.log(active_tower)
+      //console.log(customers)
+      //render_towers(towers, label);
+
+  </script>
+<form method="GET" action="">
+    <select name="active_tower">
+        {% for q in towers %}
+            <option value={{ q.loc_id}}
+            {% if active_tower == q.loc_id %}
+                    selected="selected"
+            {% endif %}
+
+
+            >{{ q.name }}</option>
+        {% endfor %}
+    </select>
+    <text> &nbsp Number of Records: </text>
+    <input type="text" name='counter' value={{counter}} size="5" />
+    <input type="submit" value="GET Data" />
+
+</form>
+
+<br>
+<br>
+<br>
+
+ {% if customers %}
+   <table border="1" >
+        <tr><td width="100"> Name </td><td width="50" align="center">RSSI</td><td width="100" align="center">Freq.</td><td width="100" align="center">AP</td><td width="150">Last Update</td></tr>
+        {% for c in customers %}
+            {% if c.frequency == '2.4' %}
+              <tr class="a"><td ><a href="http://maps.google.com/?q={{c.lat_id}},{{c.lon_id}}" class="anchor"> {{ c.name }}</a> </td><td align="center">{{ c.rssi }}</td><td align="center">{{ c.frequency }} </td><td align="center">{{ c.ap }} </td><td>{{c.mk_time}}</td></tr>
+            {% else %}
+              <tr class="b"><td ><a href="http://maps.google.com/?q={{c.lat_id}},{{c.lon_id}}" class="anchor"> {{ c.name }}</a> </td><td align="center">{{ c.rssi }}</td><td align="center">{{ c.frequency }} </td><td align="center">{{ c.ap }} </td><td>{{c.mk_time}}</td></tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+ {% else %}
+    <h2>No Data available</h2>
+ {% endif %}
+
+
+
+</body>
+</html>

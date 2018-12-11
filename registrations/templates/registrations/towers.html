@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AP List</title>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        {% load static %}
+        <script src="{% static 'aps.js' %}"> </script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+      text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+      }
+
+      table {
+            border-collapse: collapse;
+            font-size: 13px;
+
+      }
+      th, td {
+            padding: 0;
+            font-size: 20px;
+            font-family: 'Montserrat', sans-serif;
+
+      }
+      tr.a {
+            padding: 0;
+            font-size: 20px;
+            font-size: 90%;
+            font-family: 'Montserrat', sans-serif;
+            color:green;
+      }
+      tr.b {
+            padding: 0;
+            font-size: 20px;
+            font-size: 40%;
+            font-family: 'Montserrat', sans-serif;
+            color:brown;
+      }
+       tr.head {
+            padding: 0;
+            font-size: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            text-align: center;
+      }
+
+      ul.a {
+            list-style-type: circle;
+            color:green;
+      }
+
+      .anchor:link    {
+            font-family: 'Montserrat', sans-serif;
+            color:orange;
+            font-size: 35px;
+            text-decoration: none;
+      }
+      .anchor:visited {
+            font-family: 'Montserrat', sans-serif;
+            color:green;
+      }
+      .anchor:hover   {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+       .anchor:active  {
+            font-family: 'Montserrat', sans-serif;
+            color:red;
+      }
+       h2 {
+            font-size: 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+      input {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      select {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      </style>
+</head>
+<body>
+<a href="/registrations/tower_list" class="anchor">HOME</a>
+
+{% if aps %}
+    <ul class="a">
+        {% for q in aps %}
+            <li><a href="/registrations/ap/{{q.id}}" class="anchor">{{ q.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>No APs available</h2>
+
+{% endif %}
+
+  <script>
+      var aps = {{aps|safe}};
+      var customers = {{customers|safe}};
+      var rssi_sorted = {{rssi_list|safe}};
+       var label = "dupa";
+       console.log('towers.html')
+      //console.log(aps);
+      console.log('rssi_list', rssi_sorted);
+      render_aps(customers, label);
+
+  </script>
+  <h2> RSSI Readings </h2>
+
+ {% if rssi_list %}
+   <table border="1" >
+        <tr><td width="100"> Name </td><td width="100" align="center">RSSI</td><td width="100" align="center">Freq.</td><td>AP</td><td>Comment</td><td>Last Update</td></tr>
+        {% for c in rssi_list %}
+            {% if c.frequency == '2.4' %}
+              <tr class="a"><td >{{ c.name }} </td><td align="center">{{ c.rssi }}</td><td align="center">{{ c.frequency }} </td><td>{{c.ap_name}}</td><td>{{c.comment}}</td><td>{{c.mk_time}}</td></tr>
+            {% else %}
+              <tr class="b"><td >{{ c.name }} </td><td align="center">{{ c.rssi }}</td><td align="center">{{ c.frequency }} </td><td>{{c.ap_name}}</td><td>{{c.comment}}</td><td>{{c.mk_time}}</td></tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+ {% else %}
+    <h2>No RSSI data available</h2>
+ {% endif %}
+</body>
+</html>

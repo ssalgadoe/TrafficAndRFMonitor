@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QUEUES LIST</title>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+      text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+
+      }
+      ul.a {
+            list-style-type: circle;
+            color:green;
+      }
+
+      .anchor:link    {
+            font-family: 'Montserrat', sans-serif;
+            color:orange;
+            font-size: 20px;
+            text-decoration: none;
+      }
+      .anchor:visited {
+            font-family: 'Montserrat', sans-serif;
+            color:green;
+      }
+      .anchor:hover   {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+            .anchor:active  {
+            font-family: 'Montserrat', sans-serif;
+            color:red;
+      }
+       h2 {
+            font-size: 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+      input {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      select {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+
+      </style>
+</head>
+<body>
+<a href="/queues/mk_list" class="anchor">HOME</a>
+<br>
+<br>
+{% if all_queues %}
+    <ul class="a">
+        {% for q in all_queues %}
+            <li><a href="/queues/{{ q.id }}" class="anchor">{{ q.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>No Queues available</h2>
+
+{% endif %}
+</body>
+</html>

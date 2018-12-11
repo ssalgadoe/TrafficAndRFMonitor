@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrations List</title>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        {% load static %}
+        <script src="{% static "registrations.js" %}"> </script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+      text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+      }
+      ul.a {
+            list-style-type: circle;
+            color:green;
+      }
+
+      .anchor:link    {
+            font-family: 'Montserrat', sans-serif;
+            color:orange;
+            font-size: 35px;
+            text-decoration: none;
+      }
+      .anchor:visited {
+            font-family: 'Montserrat', sans-serif;
+            color:green;
+      }
+      .anchor:hover   {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+            .anchor:active  {
+            font-family: 'Montserrat', sans-serif;
+            color:red;
+      }
+       h2 {
+            font-size: 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+      input {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      select {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+
+      </style>
+</head>
+<body>
+<a href="/registrations/tower_list" class="anchor">HOME</a>
+<br>
+<br>
+{% if registrations %}
+    <ul class="a">
+        {% for q in registrations %}
+            <li><a href="/registrations/reg_name/{{q.cust_name}}" class="anchor">{{ q.cust_name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>No registrations available</h2>
+
+{% endif %}
+
+  <script>
+      //var data = "{{registrations|safe}}";
+      var customers = {{customers|safe}};
+      var label = "dupa";
+      //console.log(customers);
+      render_circles(customers, label);
+
+  </script>
+
+
+</body>
+</html>

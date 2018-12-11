@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+    <style>
+        text {
+          font-family: 'Acme', sans-serif;
+        }
+        .a {
+          font-size: 1em;
+          fill:green;
+        }
+        .c {
+          font-size: 20em;
+          fill:red;
+          stroke:black;
+          stroke-width:10px;
+        }
+        .my_circle {
+          fill:red;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+
+
+
+
+
+     d3.csv("../sample.csv", type, function(data){
+        data.forEach(function(d) {
+            console.log(d.x +":"+ d.y);
+        });
+    });
+    function type(d){
+      d.x = parseFloat(d.x);
+      d.y = parseFloat(d.y);
+      return d;
+    };
+
+
+    </script>
+</head>
+<body>
+
+<script>
+
+var window_width = 350;
+var window_height = 350;
+
+var margin = { left:30,top:30,right:30,bottom:30};
+var frame_width = window_width - margin.left - margin.right;
+var frame_height = window_height - margin.top - margin.bottom;
+
+var x_col = "x";
+var y_col = "y";
+
+
+var svg = d3.select("body").append("svg").attr("width", window_width).attr("height", window_height);
+var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top +")");
+
+var xScale = d3.scaleLinear().range([0,frame_width]);
+var yScale = d3.scaleLinear().range([frame_height,0]);
+
+function render(dataList) {
+      xScale.domain(d3.extent(dataList, function(d){ return d[x_col];}));
+      yScale.domain(d3.extent(dataList, function(d){ return d[y_col];}));
+      var circles = svg.selectAll("circle").data(dataList).enter().append("circle")
+                   .attr("r", 1).attr("cx", function(p) {return xScale(p[x_col]);}).attr("cy",function(p) {return yScale(p[y_col]);})
+                   .style("fill", "black");
+       circles.exit().remove();
+    }
+
+
+d3.csv("../sample.csv", type,  render);
+
+
+</script>
+
+</body>
+</html>

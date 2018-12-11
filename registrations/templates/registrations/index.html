@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        {% load static %}
+        <script src="{% static 'towers.js' %}"> </script>
+     <style>
+      text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+      }
+      ul.a {
+            list-style-type: circle;
+            color:green;
+      }
+
+      .anchor:link    {
+            font-family: 'Montserrat', sans-serif;
+            color:orange;
+            font-size: 25px;
+            text-decoration: none;
+
+      }
+      .anchor:visited {
+            font-family: 'Montserrat', sans-serif;
+            color:green;
+      }
+      .anchor:hover   {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+      .anchor:active  {
+            font-family: 'Montserrat', sans-serif;
+            color:red;
+      }
+
+       h2 {
+            font-size: 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+      }
+      input {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      select {
+            font-size: 25px;
+            font-family: 'Montserrat', sans-serif;
+      }
+      </style>
+</head>
+<body>
+<a href="/queues/" class="anchor">HOME</a>
+<br>
+<br>
+{% if all_towers %}
+    <ul class="a">
+        {% for q in all_towers %}
+            <li><a href="/registrations/aps/{{ q.loc_id }}" class="anchor">{{ q.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>No Towers available</h2>
+
+{% endif %}
+
+  <script>
+       //console.log('this is tower list (1)');
+      var towers = {{towers|safe}};
+      //console.log(towers)
+      var label = "dupa";
+      render_towers(towers, label);
+
+  </script>
+
+</body>
+</html>

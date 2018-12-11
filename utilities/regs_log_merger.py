@@ -51,7 +51,7 @@ def extractTime(s):
 
 def file_transfer_from_212():
     #src_folder = 'z:/registrations/'
-    src_folder = '//192.168.100.212/log-data//registrations/'
+    src_folder = '//...../log-data//registrations/'
     dst_folder = '../data/registrations/'
     listing = os.listdir(src_folder)
     for item in listing:
@@ -165,7 +165,7 @@ def remove_registrations(period):
     now = datetime.datetime.now()
     duration = now- datetime.timedelta(days=period)
     
-    conn = mysql.connect(user='root', password='.....',host='127.0.0.1',database='.....')
+    conn = mysql.connect(user='.....', password='.....',host='.....',database='.....')
     cursor = conn.cursor()
     sql= "delete from registrations_registrations where date(mk_time) < date('" + str(duration) + "')"
     #print(sql)
@@ -215,7 +215,7 @@ def saveToDB(logFile, mk_time,radio_data):
     device_name = device_name.replace(')','_')
     device_name = device_name.replace(' ','')
     device_name = device_name.replace(',','')
-    conn = mysql.connect(user='routcom_user', password='dupa@123',host='127.0.0.1',database='routcom')
+    conn = mysql.connect(user='.....', password='.....',host='.....',database='.....')
     cursor = conn.cursor()
     tower_id = radio_data[0]
     frequency = radio_data[1]

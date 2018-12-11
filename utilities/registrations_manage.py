@@ -13,7 +13,7 @@ def remove_registrations(period):
     now = datetime.datetime.now()
     duration = now- datetime.timedelta(days=period)
     
-    conn = mysql.connect(user='root', password='dupa@123',host='127.0.0.1',database='routcom')
+    conn = mysql.connect(user='root', password='.....',host='127.0.0.1',database='.....')
     cursor = conn.cursor()
     sql= "delete from registrations_registrations where date(mk_time) < date('" + str(duration) + "')"
     print(sql)

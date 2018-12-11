@@ -154,7 +154,7 @@ def saveToDB(logFile, mk_time):
     device_name = rest
     #print(device_name)
 
-    conn = mysql.connect(user='root', password='dupa@123',host='127.0.0.1',database='routcom')
+    conn = mysql.connect(user='.....', password='.....',host='127.0.0.1',database='.....')
     cursor = conn.cursor()
     for item in ds:
         sql = "select * from queues_queues where name='"+item[0] + "'"
